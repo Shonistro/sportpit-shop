@@ -1,0 +1,92 @@
+.product-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  .product-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms, transform 500ms;
+  }
+  .product-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .product-exit-active {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 500ms, transform 500ms;
+  }
+  
+  /* Стили для слайдера */
+.slider-container {
+    max-width: 480px; /* 60% от 800px */
+    margin: 0 auto 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .slick-slide {
+    position: relative;
+  }
+  
+  .slick-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .slick-slide .slide-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  
+  .slick-slide .slide-text h3 {
+    font-size: 16px; /* Уменьшили размер шрифта */
+    margin: 0;
+  }
+  
+  /* Стили для стрелок навигации */
+  .slick-prev,
+  .slick-next {
+    width: 30px; /* Уменьшили размер кнопок */
+    height: 30px;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+  
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 16px; /* Уменьшили размер иконок */
+    color: #333;
+    opacity: 1;
+  }
+  
+  .slick-prev:hover,
+  .slick-next:hover {
+    background-color: rgba(223, 228, 227, 0.74);
+  
+  }
+  
+  /* Стили для индикаторов */
+  .slick-dots li button:before {
+    font-size: 8px; /* Уменьшили размер индикаторов */
+    color: #333;
+    opacity: 0.5;
+    
+  }
+  
+  .slick-dots li.slick-active button:before {
+    color: #333;
+    opacity: 1;
+  }

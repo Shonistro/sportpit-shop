@@ -8,6 +8,8 @@ export const productData: Product[] = [
     image: '/product-images/proteins/protein1.png',
     price: 19.99,
     category: { id: 2, name: 'Proteins', slug: 'proteins' },
+    short_description: 'Hello',
+    
   },
   {
     id: 2,
@@ -16,6 +18,7 @@ export const productData: Product[] = [
     image: '/product-images/proteins/protein2.png',
     price: 22.12,
     category: { id: 2, name: 'Proteins', slug: 'proteins' },
+    short_description: 'Hello',
   },
   {
     id: 3,
@@ -24,6 +27,7 @@ export const productData: Product[] = [
     image: '/product-images/proteins/protein3.png',
     price: 29.99,
     category: { id: 2, name: 'Proteins', slug: 'proteins' },
+    short_description: 'Hello',
   },
   {
     id: 4,
@@ -32,6 +36,7 @@ export const productData: Product[] = [
     image: '/product-images/proteins/protein4.png',
     price: 12.99,
     category: { id: 2, name: 'Proteins', slug: 'proteins' },
+    short_description: 'Hello',
   },
   {
     id: 5,
@@ -40,6 +45,7 @@ export const productData: Product[] = [
     image: '/product-images/vitamins/vitamins1.png',
     price: 12.99,
     category: { id: 5, name: 'Vitamins', slug: 'vitamins' },
+    short_description: 'Hello',
   },
   {
     id: 6,
@@ -48,6 +54,7 @@ export const productData: Product[] = [
     image: '/product-images/vitamins/vitamins2.png',
     price: 12.99,
     category: { id: 5, name: 'Vitamins', slug: 'vitamins' },
+    short_description: 'Hello',
   },
 ];
 

@@ -1,40 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProducts } from '../utils/productData';
-import {Product} from '../types'
+import { Product } from '../types';
+import ProductCard from '../components/ProductCard';
+import { fetchProducts } from '../utils/api';
+import Sidebar from '../components/SideBar';  // Импортируем новый компонент
 
-const ProductPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const products = getProducts();
-  const product = products.find((p) => p.id === Number(id));
+const ProductListPage: React.FC = () => {
+  const { slug } = useParams<{ slug?: string }>();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+  const [sortOption, setSortOption] = useState<string>('default');
 
-  if (!product) {
-    return <div>Продукт не найден</div>;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchProducts();
+        if (slug) {
+          const filteredProducts = data.filter(product => product.category.name === slug);
+          setProducts(filteredProducts);
+          setSortedProducts(filteredProducts);
+        } else {
+          setProducts(data);
+          setSortedProducts(data);
+        }
+        setError(null);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [slug]);
+
+  useEffect(() => {
+    let sortedArray = [...products];
+    if (sortOption === 'priceAsc') {
+      sortedArray.sort((a, b) => a.price - b.price);
+    } else if (sortOption === 'priceDesc') {
+      sortedArray.sort((a, b) => b.price - a.price);
+    }
+    setSortedProducts(sortedArray);
+  }, [sortOption, products]);
+
+  if (loading) {
+    return <div>Загрузка...</div>;
+  }
+
+  if (error) {
+    return <div>Ошибка: {error.message}</div>;
   }
 
   return (
-    
-    <div className="container mx-auto py-8">
-       
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-1/2 mb-4 md:mb-0">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-auto object-cover"
-          />
+    <div className="flex">
+      <Sidebar sortOption={sortOption} setSortOption={setSortOption} />
+      <main className="w-4/5 p-4">
+        <h2 className="text-2xl font-bold mb-4">Продукты</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {sortedProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
-        <div className="md:w-1/2 md:pl-8">
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-          <p className="text-gray-700 mb-4">{product.description}</p>
-          <p className="text-2xl font-bold mb-4">${product.price}</p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-            В корзину
-          </button>
-        </div>
-      </div>
+      </main>
     </div>
   );
 };
 
-export default ProductPage;
+export default ProductListPage;

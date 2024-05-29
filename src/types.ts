@@ -11,4 +11,5 @@ export interface Product {
   image: string;
   price: number;
   category: Category;
+  short_description: string;
 }
