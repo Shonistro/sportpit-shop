@@ -13,7 +13,8 @@ const Cart: React.FC<CartProps> = ({ items, totalPrice, clearCart }) => {
     <div>
       <h2 className="text-2xl font-bold mb-4">Корзина</h2>
       {items.length === 0 ? (
-        <p>Ваша корзина пуста</p>
+        <p>Ваш кошик порожній
+        </p>
       ) : (
         <div>
          <ul>
@@ -26,7 +27,7 @@ const Cart: React.FC<CartProps> = ({ items, totalPrice, clearCart }) => {
               onClick={clearCart}
               className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
             >
-              Очистить корзину
+              Очистити кошик
             </button>
             <p className="text-2xl font-bold">
               Итого: <span>${totalPrice.toFixed(2)}</span>
@@ -35,7 +36,7 @@ const Cart: React.FC<CartProps> = ({ items, totalPrice, clearCart }) => {
               href="/checkout"
               className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
             >
-              Оформить заказ
+              Оформити замовлення
             </a>
           </div>
         </div>

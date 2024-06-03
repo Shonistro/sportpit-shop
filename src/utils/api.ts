@@ -3,28 +3,34 @@ import axios from 'axios';
 import { Product } from '../types';
 
 
+const API_BASE_URL = 'http://127.0.0.1:8000/';
+
 
 
 export const fetchProducts = async (): Promise<Product[]> => {
-  const response = await fetch('http://127.0.0.1:8000/api/products/'); // Обновите URL на актуальный путь к вашему JSON файлу
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
-  }
-  const data: Product[] = await response.json();
-  return data;
+  const response = await api.get('api/products/');
+  return response.data;
 };
 
-const API_BASE_URL = 'http://127.0.0.1:8000/';
-
  
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true, // Включение передачи кук
   headers: {
     'Content-Type': 'application/json',
-    'X-CSRFTOKEN': 'zMkv5eD3Wfb8ASRMujM3A2boQ9LEL52cXrEz12RnMXSwXlYKg97wqVMskA9pdkE9', // Добавьте ваш CSRF-токен здесь
+    'X-CSRFTOKEN': 'zMkv5eD3Wfb8ASRMujM3A2boQ9LEL52cXrEz12RnMXSwXlYKg97wqVMskA9pdkE9',  
   },
 });
+
+
+export const filterProducts = (products: Product[], searchQuery: string): Product[] => {
+  return products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+};
+
+ 
 
 // Функция для выполнения запросов
 export const apiRequest = async (method: string, url: string, data?: any) => {

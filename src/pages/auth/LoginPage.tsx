@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { apiRequest } from '../../utils/api';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const redirectTo = searchParams.get('redirect') || '/';
   const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,26 +20,40 @@ const LoginPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Здесь вы можете выполнить проверку введенных данных и отправить их на сервер
-    console.log(formData);
-    setError(''); // Сброс ошибки после успешной отправки формы
+
+    try {
+      const data = await apiRequest('POST', '/api/login/', {
+        username: formData.username,
+        password: formData.password,
+      });
+
+      // Сохраняем токены в локальном хранилище
+      localStorage.setItem('accessToken', data.access);
+      localStorage.setItem('refreshToken', data.refresh);
+
+      // Перенаправляем на защищенную страницу после успешного входа
+      navigate(redirectTo, { replace: true });
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Ошибка входа');
+      console.error('Ошибка:', err.response?.data || err.message);
+    }
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 max-w-md w-full">
+      <form onSubmit={handleLogin} className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Вход</h2>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-            Email
+          <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
+            Имя пользователя
           </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />

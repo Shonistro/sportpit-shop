@@ -118,7 +118,7 @@ const PopularProducts: React.FC = () => {
               <div className="text-center flex-grow">
                 <h3 className="text-lg font-semibold">{product.name}</h3>
                 <p className="text-sm text-gray-600">{product.brand}</p>
-                <p className="text-lg font-bold">Цена: {product.price} RUB</p>
+                <p className="text-lg font-bold">Цена: {product.price} Грн</p>
                 <p className="text-sm text-yellow-500">Рейтинг: {product.rating}</p>
                 <p className="text-sm text-gray-500">Отзывов: {product.reviewCount}</p>
                 {product.isDiscounted && <p className="text-sm text-red-600">Скидка: {product.discountType}</p>}

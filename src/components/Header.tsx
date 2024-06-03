@@ -24,7 +24,7 @@ const Header: React.FC = () => {
                 className="flex items-center p-2 transition-transform duration-300 hover:scale-110 hover:text-blue-500"
               >
                 <FaShoppingCart className="transition-transform duration-300 hover:scale-125" />
-                <span className="ml-2">Cart</span>
+                <span className="ml-">Кошик</span>
               </Link>
             </li>
             <li>
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
                 className="flex items-center p-2 transition-transform duration-300 hover:scale-110 hover:text-blue-500"
               >
                 <FaUserPlus className="transition-transform duration-300 hover:scale-125" />
-                <span className="ml-2">Register</span>
+                <span className="ml-2">Реєстрація</span>
               </Link>
             </li>
             <li>
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 className="flex items-center p-2 transition-transform duration-300 hover:scale-110 hover:text-blue-500"
               >
                 <FaSignInAlt className="transition-transform duration-300 hover:scale-125" />
-                <span className="ml-2">Login</span>
+                <span className="ml-2">Увійти</span>
               </Link>
             </li>
           </ul>

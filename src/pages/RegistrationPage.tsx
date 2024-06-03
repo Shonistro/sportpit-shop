@@ -8,7 +8,7 @@ const RegistrationPage = () => {
     username: '',
     email: '',
     password1: '',
-    password2: '', // Изменено с confirmPassword на password2
+    password2: '', 
   });
 
   const [error, setError] = useState('');
@@ -43,14 +43,21 @@ const RegistrationPage = () => {
         password2: formData.password2,
       });
   
+      localStorage.setItem('accessToken', data.access);
+      localStorage.setItem('refreshToken', data.refresh);
+
+
       setSuccess('Регистрация успешна!');
       setError('');
       console.log('Успешная регистрация:', data);
+
+      window.location.href = '/login';
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Ошибка регистрации');
-      console.error('Ошибка:', err.response?.data || err.message);
-    }
-  };
+    setError(err.response?.data?.error || 'Ошибка регистрации');
+    console.error('Ошибка:', err.response?.data || err.message);
+  }
+};
+
   
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

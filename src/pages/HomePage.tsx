@@ -4,7 +4,7 @@ import SliderComponent from '../components/Slider';
 import FeaturedProducts from '../components/FeaturedProducts';
 import ProductPairSlider from '../components/DoubleBuy';
 import PopularProducts from '../components/PopularProducts';
-import Testimonials from '../components/Testimonials'; // Импортируйте компонент Testimonials
+import Testimonials from '../components/Testimonials';  
 
 
 //token - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MzI3NzQ0LCJpYXQiOjE3MTYzMjc0NDQsImp0aSI6ImE5ZGI2YWFiYTFjMzRjMmRhODQ1ZjAyOGNmNzkxMjYxIiwidXNlcl9pZCI6MX0._e4IpJHmz4C_u-UJ6Km5E7zziImYQdJ0HelDWp89zAU
@@ -26,7 +26,7 @@ const HomePage = () => {
           <FeaturedProducts />
         </div>
       </div>
-      <Testimonials /> {/* Добавьте компонент Testimonials здесь */}
+      <Testimonials />  
     </div>
   );
 };

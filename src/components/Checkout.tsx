@@ -28,11 +28,11 @@ const Checkout: React.FC<CheckoutProps> = ({ items, totalPrice }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Оформление заказа</h2>
+      <h2 className="text-2xl font-bold mb-4">Оформлення замовлення</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block font-semibold mb-1">
-            Имя
+          Ім'я
           </label>
           <input
             type="text"
@@ -60,7 +60,7 @@ const Checkout: React.FC<CheckoutProps> = ({ items, totalPrice }) => {
         </div>
         <div className="mb-4">
           <label htmlFor="address" className="block font-semibold mb-1">
-            Адрес
+          Адреса
           </label>
           <input
             type="text"
