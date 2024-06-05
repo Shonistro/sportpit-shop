@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { isAuthenticated } from '../utils/auth';
+import { apiRequest } from '../utils/api';
+ 
 
 interface ProductCardProps {
+
   product: {
     short_description: string;
     description: string;
@@ -18,7 +23,42 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const imageURL = `http://localhost:8000${product.image}`;
   const [descriptionRef, setDescriptionRef] = useState<HTMLDivElement | null>(null);
   const [descriptionHeight, setDescriptionHeight] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+
+
+  useEffect(() => {
+    setIsLoggedIn(isAuthenticated());
+  }, []);
+
+
+
+
+  const handleAddToCart = () => {
+    if (isLoggedIn) {
+      apiRequest('post', `/api/cart/add-to-cart/${product.id}/1/`)
+        .then((response) => {
+          console.log('Товар добавлен в корзину');
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            // Обработка ошибки 401 Unauthorized
+            navigate('/login');
+          } else {
+            console.error('Ошибка при добавлении товара в корзину:', error);
+          }
+        });
+    } else {
+      navigate('/login');
+    }
+  };
+  
+  
+  
+  
+
+  //Быстрый осмотр
   const openQuickView = () => {
     setIsModalOpen(true);
   };
@@ -28,6 +68,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setShowFullDescription(false);
   };
 
+
+  //отоброзить описание продуктика и еще для окна чтоб после первого открытия оно лочило размер и не дрыгало
   const toggleDescription = () => {
     setShowFullDescription((prev) => !prev);
   };
@@ -43,6 +85,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
       setDescriptionHeight(descriptionRef.scrollHeight);
     }
   }, [descriptionRef, showFullDescription]);
+
+
+
+
+
 
   return (
     <>
@@ -61,7 +108,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="p-4">
           <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
           <p className="text-gray-600 mb-4">${product.price}</p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+          <button 
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          onClick={handleAddToCart}
+          >
             В корзину
           </button>
         </div>
@@ -103,7 +153,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
                   >
                     {showFullDescription ? 'Краткое описание' : 'Полное описание'}
                   </button>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                  <button 
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  onClick={handleAddToCart}
+                  >
                     В корзину
                   </button>
                 </div>

@@ -12,4 +12,8 @@ export interface Product {
   price: number;
   category: Category;
   short_description: string;
+  imageUrl?: string;
 }
+
+
+ 

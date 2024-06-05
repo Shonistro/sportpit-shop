@@ -46,3 +46,14 @@ export const apiRequest = async (method: string, url: string, data?: any) => {
     throw error;
   }
 };
+
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);

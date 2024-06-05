@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { fetchProducts, filterProducts } from '../utils/api';
 import { Product } from '../types';
 
+const stripHtmlTags = (html: string) => {
+  return html.replace(/<[^>]*>/g, '');
+};
+
 interface SearchBarProps {
   placeholder: string;
 }
@@ -13,6 +17,8 @@ const SearchBar = ({ placeholder }: SearchBarProps) => {
   const [suggestions, setSuggestions] = useState<Product[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const navigate = useNavigate();
+
+  const baseURL = process.env.REACT_APP_BASE_URL || 'http://127.0.0.1:8000';
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -40,7 +46,8 @@ const SearchBar = ({ placeholder }: SearchBarProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-    if (query) {
+
+    if (query.trim() !== '') {
       const filtered = filterProducts(products, query);
       setSuggestions(filtered);
       setShowSuggestions(true);
@@ -81,16 +88,28 @@ const SearchBar = ({ placeholder }: SearchBarProps) => {
           </svg>
         </button>
       </form>
-      {showSuggestions && (
-        <div className="absolute z-10 w-96 mt-2 bg-white rounded-md shadow-lg">
+      {suggestions.length > 0 && showSuggestions && (
+        <div className="absolute z-10 w-96 mt-2 bg-white rounded-md shadow-lg border border-gray-200">
           {suggestions.map(product => (
             <div
               key={product.id}
-              className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+              className="py-3 px-4 hover:bg-gray-100 hover:shadow-md cursor-pointer flex items-center justify-between transition-all duration-200"
               onClick={() => handleProductClick(product)}
             >
-              <h2 className="text-lg font-semibold">{product.name}</h2>
-              <p className="text-gray-600">Price: {product.price}</p>
+              <div className="flex items-center">
+                <img
+                  src={`${baseURL}${product.image}`}
+                  alt={product.name}
+                  className="w-10 h-10 object-cover rounded-md mr-4"
+                />
+                <div>
+                  <h2 className="text-lg font-semibold">{product.name}</h2>
+                  <p className="text-gray-600">{stripHtmlTags(product.description.substring(0, 20))}...</p>
+                </div>
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-800 font-bold">${product.price}</p>
+              </div>
             </div>
           ))}
         </div>

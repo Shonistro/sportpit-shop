@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { apiRequest } from '../../utils/api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const LoginPage = () => {
+interface LoginPageProps {
+  onLogin: () => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -32,6 +36,9 @@ const LoginPage = () => {
       // Сохраняем токены в локальном хранилище
       localStorage.setItem('accessToken', data.access);
       localStorage.setItem('refreshToken', data.refresh);
+
+      // Обновляем состояние аутентификации
+      onLogin();
 
       // Перенаправляем на защищенную страницу после успешного входа
       navigate(redirectTo, { replace: true });
