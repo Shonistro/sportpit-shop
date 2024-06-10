@@ -16,13 +16,12 @@ const CartItemComponent: React.FC<CartItemProps> = ({ item, handleQuantityChange
       handleQuantityChange(id, quantity - 1);
     }
   };
-  
+
   const incrementQuantity = () => {
     handleQuantityChange(id, quantity + 1);
   };
-  
-  return (
 
+  return (
     <li className="flex items-center justify-between mb-4">
       <div className="flex items-center">
         <img src={imageURL} alt={product.name} className="w-16 h-16 mr-4" />
@@ -32,29 +31,30 @@ const CartItemComponent: React.FC<CartItemProps> = ({ item, handleQuantityChange
         </div>
       </div>
       <div className="flex items-center">
-      <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded-l"
-        onClick={decrementQuantity}
-        disabled={quantity === 1}
-      >
-        -
-      </button>
-      <span className="px-4">{quantity}</span>
-      <button
-        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded-r"
-        onClick={incrementQuantity}
-      >
-        +
-      </button>
-      <button
-        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded ml-2"
-        onClick={() => removeCartItem(id)}
-      >
-        Remove
-      </button>
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l focus:outline-none"
+          onClick={decrementQuantity}
+          disabled={quantity === 1}
+        >
+          -
+        </button>
+        <span className="px-4 text-lg">{quantity}</span>
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r focus:outline-none"
+          onClick={incrementQuantity}
+        >
+          +
+        </button>
+        <button
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-2 focus:outline-none"
+          onClick={() => removeCartItem(id)}
+        >
+          Удалить
+        </button>
       </div>
     </li>
   );
 };
 
 export default CartItemComponent;
+

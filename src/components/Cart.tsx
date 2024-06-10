@@ -1,15 +1,13 @@
-// src/components/Cart.tsx
 import React from 'react';
 import { CartItem } from '../utils/cart';
 import CartItemComponent from './CartItemComponent';
-
 
 interface CartProps {
   items: CartItem[];
   totalPrice: number;
   clearCart: () => void;
   handleQuantityChange: (itemId: number, newQuantity: number) => void;
-  removeCartItem: (cartItemId: number) => void; // Добавили removeCartItem
+  removeCartItem: (cartItemId: number) => void;
 }
 
 const Cart: React.FC<CartProps> = ({
@@ -29,11 +27,11 @@ const Cart: React.FC<CartProps> = ({
           <ul>
             {items.map((item) => (
               <CartItemComponent
-              key={item.id}
-              item={item}
-              handleQuantityChange={handleQuantityChange}
-              removeCartItem={removeCartItem}
-            />
+                key={item.id}
+                item={item}
+                handleQuantityChange={handleQuantityChange}
+                removeCartItem={removeCartItem}
+              />
             ))}
           </ul>
           <div className="flex justify-between items-center mt-8">
